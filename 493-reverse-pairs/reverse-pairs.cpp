@@ -44,7 +44,7 @@ public:
     }
 
     void mergesort(vector<int> &vec, int low, int high, int &cnt){
-        if(low==high){
+        if(low>=high){
             return ;
         }
         int mid=(low+high)/2;
