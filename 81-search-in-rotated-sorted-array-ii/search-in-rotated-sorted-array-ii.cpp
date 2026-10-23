@@ -1,40 +1,30 @@
 class Solution {
 public:
-    int findk(vector<int> &nums,int n){
-        for(int i=n-1;i>0;i--){
-            if(nums[i-1]>nums[i]){
-                return i;
-            }
-        }
-        return 0;
-    }
     bool search(vector<int>& nums, int target) {
         int n=nums.size();
-        int k=findk(nums,n);
+        int low=0,hi=n-1;
 
-        int low=0,high=n-1;
-
-        if(nums[0]==target){
-            return true;
-            }
-            else if(nums[0]>target){
-                low=k;
-            }
-            else{
-                high=(n+k-1)%n;
-            }
-        
-        while(low<=high){
-        int mid=(low+high)/2;
-
+        while(low<=hi){
+            int mid=(low+hi)/2;
             if(nums[mid]==target){
                 return true;
             }
-            else if(nums[mid]<target){
-                low=mid+1;
+            if(nums[low]==nums[mid] && nums[mid]==nums[hi]){
+                low++;
+                hi--;
+                continue;
+            }
+            if(nums[mid]>=nums[low]){
+                if(target>=nums[low] && target<nums[mid]){
+                    hi=mid-1;
+                }
+                else low=mid+1;
             }
             else{
-                high=mid-1;
+                if(target>nums[mid] && target<=nums[hi]){
+                    low=mid+1;
+                }
+                else hi=mid-1;
             }
         }
         return false;
